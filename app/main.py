@@ -108,7 +108,7 @@ from contextlib import asynccontextmanager
 from .database import engine, Base
 
 @asynccontextmanager
-def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI):
     # This runs ON STARTUP. If it fails, we get a clear log message.
     try:
         Base.metadata.create_all(bind=engine)
