@@ -104,6 +104,23 @@ class TelemetryUpdate(BaseModel):
 # ENDPOINTS
 # ==========================================
 
+from contextlib import asynccontextmanager
+from .database import engine, Base
+
+@asynccontextmanager
+def lifespan(app: FastAPI):
+    # This runs ON STARTUP. If it fails, we get a clear log message.
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("📁 Database tables synchronized successfully.")
+    except Exception as e:
+        print(f"❌ Database connection failed at startup: {e}")
+    yield
+    # Any cleanup code runs here on shutdown
+
+app = FastAPI(lifespan=lifespan)
+
+
 @app.get("/")
 def read_root():
     return {"status": "operational", "message": "LogiMind OS Backend is running"}
