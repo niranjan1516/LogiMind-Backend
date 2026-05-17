@@ -114,8 +114,6 @@ app.add_middleware(
 )
 
 
-
-
 @app.get("/")
 def read_root():
     return {"status": "operational", "message": "LogiMind OS Backend is running"}
