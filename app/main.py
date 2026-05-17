@@ -41,21 +41,6 @@ def normalize_phone_number(phone_number: str) -> str:
         return digits[2:]
     return digits
 
-app = FastAPI(title="LogiMind OS API", version="1.0.0")
-
-DEFAULT_CORS_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    # add your production frontend URL here later!
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=DEFAULT_CORS_ORIGINS, # <--- Use the exact list 
-    allow_credentials=True,             # <--- Now this is perfectly legal
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # ==========================================
 # PYDANTIC SCHEMAS (Data Validation)
@@ -111,7 +96,24 @@ async def lifespan(app: FastAPI):
     yield
     # Any cleanup code runs here on shutdown
 
-app = FastAPI(lifespan=lifespan)
+# 1. Initialize the app ONCE with title, version, AND lifespan
+app = FastAPI(title="LogiMind OS API", version="1.0.0", lifespan=lifespan)
+
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    # add your production frontend URL here later!
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=DEFAULT_CORS_ORIGINS, # <--- Use the exact list 
+    allow_credentials=True,             # <--- Now this is perfectly legal
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 
 @app.get("/")
