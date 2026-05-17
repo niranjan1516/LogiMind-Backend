@@ -46,20 +46,13 @@ app = FastAPI(title="LogiMind OS API", version="1.0.0")
 DEFAULT_CORS_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://localhost:8081",
-    "http://127.0.0.1:8081",
-    "http://10.149.219.200:8081",
-]
-allowed_origins = [
-    origin.strip()
-    for origin in os.getenv("BACKEND_CORS_ORIGINS", ",".join(DEFAULT_CORS_ORIGINS)).split(",")
-    if origin.strip()
+    # add your production frontend URL here later!
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
+    allow_origins=DEFAULT_CORS_ORIGINS, # <--- Use the exact list 
+    allow_credentials=True,             # <--- Now this is perfectly legal
     allow_methods=["*"],
     allow_headers=["*"],
 )
