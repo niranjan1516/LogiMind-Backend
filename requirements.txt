@@ -13,6 +13,7 @@ psycopg2-binary
 
 # Advanced Routing & Optimization (Phase 4 Logic)
 ortools
+tensorflow-cpu==2.15.0
 
 # Data Science, Machine Learning & Forecasting (Phase 4 Logic)
 joblib
