@@ -28,3 +28,6 @@ branca
 xyzservices
 jinja2
 MarkupSafe
+
+uvicorn[standard]==0.22.0
+websockets==11.0.3
